@@ -15,27 +15,27 @@ CREATE TABLE inventaire(
 CREATE TABLE produit(
    produit_id SERIAL,
    quantite INTEGER,
-   prix_achat INTEGER,
+   prix_achat NUMERIC(15,2)  ,
    PRIMARY KEY(produit_id)
 );
 
 CREATE TABLE achat(
    achat_id SERIAL,
-   produit VARCHAR(50) ,
+   achat_produit_id INTEGER,
    PRIMARY KEY(achat_id)
 );
 
 CREATE TABLE remplissage(
-   id_remplissage SERIAL,
-   PRIMARY KEY(id_remplissage)
+   remplissage_id SERIAL,
+   PRIMARY KEY(remplissage_id)
 );
 
 CREATE TABLE type_de_machine(
-   type_m_Id SERIAL,
+   type_m_id SERIAL,
    model VARCHAR(50) ,
    manufacturier VARCHAR(50) ,
    no_serie VARCHAR(50) ,
-   PRIMARY KEY(type_m_Id)
+   PRIMARY KEY(type_m_id)
 );
 
 CREATE TABLE dimension(
@@ -45,8 +45,8 @@ CREATE TABLE dimension(
    hauteur INTEGER,
    longueur INTEGER,
    forme VARCHAR(50) ,
-   produit_par_unité INTEGER,
-   est_emballé BOOLEAN,
+   produit_par_unite INTEGER,
+   est_emballe BOOLEAN,
    PRIMARY KEY(dimension_id)
 );
 
@@ -78,12 +78,12 @@ CREATE TABLE machine(
    machine_id SERIAL,
    emplacement VARCHAR(50) ,
    nom VARCHAR(50) ,
-   type_m_Id INTEGER NOT NULL,
-   id_remplissage INTEGER NOT NULL,
+   type_m_id INTEGER NOT NULL,
+   remplissage_id INTEGER NOT NULL,
    achat_id INTEGER NOT NULL,
    PRIMARY KEY(machine_id),
-   FOREIGN KEY(type_m_Id) REFERENCES type_de_machine(type_m_Id),
-   FOREIGN KEY(id_remplissage) REFERENCES remplissage(id_remplissage),
+   FOREIGN KEY(type_m_id) REFERENCES type_de_machine(type_m_id),
+   FOREIGN KEY(remplissage_id) REFERENCES remplissage(remplissage_id),
    FOREIGN KEY(achat_id) REFERENCES achat(achat_id)
 );
 
@@ -96,7 +96,7 @@ CREATE TABLE type_de_produit(
    FOREIGN KEY(dimension_id) REFERENCES dimension(dimension_id)
 );
 
-CREATE TABLE caractèristique_machine(
+CREATE TABLE caracteristique_machine(
    caracteristique_m_id SERIAL,
    nom VARCHAR(50) ,
    description VARCHAR(50) ,
@@ -105,7 +105,7 @@ CREATE TABLE caractèristique_machine(
    FOREIGN KEY(type_caracteristique_m_id) REFERENCES type_de_caracteristique_machine(type_caracteristique_m_id)
 );
 
-CREATE TABLE caractèristique_produit(
+CREATE TABLE caracteristique_produit(
    caracteristique_p_id SERIAL,
    nom VARCHAR(50) ,
    type_caracteristique_p_id INTEGER NOT NULL,
@@ -139,10 +139,10 @@ CREATE TABLE usager_x_achat(
 
 CREATE TABLE usager_x_remplissage(
    usager_id INTEGER,
-   id_remplissage INTEGER,
-   PRIMARY KEY(usager_id, id_remplissage),
+   remplissage_id INTEGER,
+   PRIMARY KEY(usager_id, remplissage_id),
    FOREIGN KEY(usager_id) REFERENCES usager(usager_id),
-   FOREIGN KEY(id_remplissage) REFERENCES remplissage(id_remplissage)
+   FOREIGN KEY(remplissage_id) REFERENCES remplissage(remplissage_id)
 );
 
 CREATE TABLE usager_x_machines(
@@ -155,10 +155,10 @@ CREATE TABLE usager_x_machines(
 
 CREATE TABLE remplissage_x_produit(
    produit_id INTEGER,
-   id_remplissage INTEGER,
-   PRIMARY KEY(produit_id, id_remplissage),
+   remplissage_id INTEGER,
+   PRIMARY KEY(produit_id, remplissage_id),
    FOREIGN KEY(produit_id) REFERENCES produit(produit_id),
-   FOREIGN KEY(id_remplissage) REFERENCES remplissage(id_remplissage)
+   FOREIGN KEY(remplissage_id) REFERENCES remplissage(remplissage_id)
 );
 
 CREATE TABLE produit_x_type(
@@ -170,17 +170,17 @@ CREATE TABLE produit_x_type(
 );
 
 CREATE TABLE type_machine_x_caracteristique(
-   type_m_Id INTEGER,
-   caracteristique_m_Id INTEGER,
-   PRIMARY KEY(type_m_Id, caracteristique_m_Id),
-   FOREIGN KEY(type_m_Id) REFERENCES type_de_machine(type_m_Id),
-   FOREIGN KEY(caracteristique_m_Id) REFERENCES caractèristique_machine(caracteristique_m_Id)
+   type_m_id INTEGER,
+   caracteristique_m_id INTEGER,
+   PRIMARY KEY(type_m_id, caracteristique_m_id),
+   FOREIGN KEY(type_m_id) REFERENCES type_de_machine(type_m_id),
+   FOREIGN KEY(caracteristique_m_id) REFERENCES caracteristique_machine(caracteristique_m_id)
 );
 
-CREATE TABLE type_produit_x_caracterisitque(
+CREATE TABLE type_produit_x_caracteristique(
    type_p_id INTEGER,
    caracteristique_p_id INTEGER,
    PRIMARY KEY(type_p_id, caracteristique_p_id),
    FOREIGN KEY(type_p_id) REFERENCES type_de_produit(type_p_id),
-   FOREIGN KEY(caracteristique_p_id) REFERENCES caractèristique_produit(caracteristique_p_id)
+   FOREIGN KEY(caracteristique_p_id) REFERENCES caracteristique_produit(caracteristique_p_id)
 );
