@@ -40,7 +40,7 @@ CREATE TABLE type_de_machine(
 
 CREATE TABLE dimension(
    dimension_id SERIAL,
-   nom INTEGER,
+   nom VARCHAR(50) ,
    largeur INTEGER,
    hauteur INTEGER,
    longueur INTEGER,
@@ -97,12 +97,11 @@ CREATE TABLE type_de_produit(
 );
 
 CREATE TABLE caractèristique_machine(
-   caracteristique_m_Id SERIAL,
+   caracteristique_m_id SERIAL,
    nom VARCHAR(50) ,
    description VARCHAR(50) ,
-   type VARCHAR(50) ,
    type_caracteristique_m_id INTEGER NOT NULL,
-   PRIMARY KEY(caracteristique_m_Id),
+   PRIMARY KEY(caracteristique_m_id),
    FOREIGN KEY(type_caracteristique_m_id) REFERENCES type_de_caracteristique_machine(type_caracteristique_m_id)
 );
 
