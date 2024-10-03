@@ -235,3 +235,16 @@ INSERT INTO projet.usager (nom, prenom, solde, email, profil_pic, status_id)
 VALUES ('Nom 1', 'Prenom 1', 1, 'test', 'test', 1);
 INSERT INTO projet.usager (nom, prenom, solde, email, profil_pic, status_id)
 VALUES ('Nom 2', 'Prenom 2', 2, 'test', 'test', 2);
+
+
+
+-- Création de Vue pour la comunication avec le backend
+
+CREATE VIEW machine_usager AS
+SELECT
+    projet.machine.emplacement,
+    projet.usager.nom
+FROM
+  projet.usager_x_machines
+    JOIN projet.machine ON machine.machine_id = usager_x_machines.machine_id
+    JOIN projet.usager ON usager.usager_id = usager_x_machines.usager_id;
