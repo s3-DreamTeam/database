@@ -236,6 +236,8 @@ VALUES ('Nom 1', 'Prenom 1', 1, 'test', 'test', 1);
 INSERT INTO projet.usager (nom, prenom, solde, email, profil_pic, status_id)
 VALUES ('Nom 2', 'Prenom 2', 2, 'test', 'test', 2);
 
+INSERT INTO projet.usager_x_machines (usager_id, machine_id)
+VALUES (1, 1);
 
 
 -- Création de Vue pour la comunication avec le backend
