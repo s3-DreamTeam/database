@@ -12,15 +12,6 @@ CREATE TABLE inventaire(
    PRIMARY KEY(inventaire_id)
 );
 
-CREATE TABLE produit(
-   produit_id SERIAL,
-   quantite INTEGER,
-   prix_achat INTEGER,
-   image_produit VARCHAR(50) ,
-   nom_produit VARCHAR(50) ,
-   PRIMARY KEY(produit_id)
-);
-
 CREATE TABLE achat(
    achat_id SERIAL,
    produit VARCHAR(50) ,
@@ -117,6 +108,17 @@ CREATE TABLE caracteristique_produit(
    FOREIGN KEY(type_caracteristique_p_id) REFERENCES type_de_caracteristique_produit(type_caracteristique_p_id)
 );
 
+CREATE TABLE produit(
+   produit_id SERIAL,
+   quantite INTEGER,
+   prix_achat INTEGER,
+   image_produit VARCHAR(50) ,
+   nom_produit VARCHAR(50) ,
+   type_p_id INTEGER NOT NULL,
+   PRIMARY KEY(produit_id),
+   FOREIGN KEY(type_p_id) REFERENCES type_de_produit(type_p_id)
+);
+
 CREATE TABLE machine_x_inventaire(
    machine_id INTEGER,
    inventaire_id INTEGER,
@@ -173,14 +175,6 @@ CREATE TABLE remplissage_x_produit(
    FOREIGN KEY(remplissage_id) REFERENCES remplissage(remplissage_id)
 );
 
-CREATE TABLE produit_x_type(
-   produit_id INTEGER,
-   type_p_id INTEGER,
-   PRIMARY KEY(produit_id, type_p_id),
-   FOREIGN KEY(produit_id) REFERENCES produit(produit_id),
-   FOREIGN KEY(type_p_id) REFERENCES type_de_produit(type_p_id)
-);
-
 CREATE TABLE type_machine_x_caracteristique(
    type_m_id INTEGER,
    caracteristique_m_id INTEGER,
@@ -205,6 +199,7 @@ CREATE TABLE usager_x_produit(
    FOREIGN KEY(produit_id) REFERENCES produit(produit_id)
 );
 
+-- Insertion de données dans la base de données
 
 INSERT INTO projet.status (nom)
 VALUES ('Client');
@@ -233,8 +228,8 @@ VALUES ('machine 1', 1, 1, 1, 'Forme 1', 1, TRUE);
 INSERT INTO projet.type_de_produit (nom, marge, dimension_id, image_type_produit)
 VALUES ('Type de produit 1', 10, 1, 'image');
 
-INSERT INTO projet.produit (quantite, prix_achat, image_produit)
-VALUES (1, 1, 'image');
+INSERT INTO projet.produit (quantite, prix_achat, image_produit, nom_produit, type_p_id)
+VALUES (1, 1, 'image', 'Nom produit 1', 1);
 
 INSERT INTO projet.inventaire (inventaire_id)
 VALUES (1);
@@ -259,17 +254,11 @@ VALUES ('Nom 2', 'Prenom 2', 2, 'test', 'test', 2);
 INSERT INTO projet.usager_x_machines (usager_id, machine_id)
 VALUES (1, 1);
 
+INSERT INTO projet.usager_x_produit (usager_id, produit_id)
+VALUES (1, 1);
+
 
 -- Création de Vue pour la comunication avec le backend
-
-CREATE VIEW machine_usager AS
-SELECT
-    projet.machine.emplacement,
-    projet.usager.nom
-FROM
-  projet.usager_x_machines
-    JOIN projet.machine ON machine.machine_id = usager_x_machines.machine_id
-    JOIN projet.usager ON usager.usager_id = usager_x_machines.usager_id;
 
 CREATE VIEW machine_inventory_page AS
 SELECT
@@ -300,3 +289,52 @@ FROM
     projet.usager_x_produit
         JOIN projet.produit ON produit.produit_id = usager_x_produit.produit_id
         JOIN projet.usager ON usager.usager_id = usager_x_produit.usager_id;
+
+CREATE VIEW product_inventory_specific AS
+SELECT
+    projet.produit.*,
+    projet.usager.usager_id
+FROM
+    projet.usager_x_produit
+        JOIN projet.produit ON produit.produit_id = usager_x_produit.produit_id
+        JOIN projet.usager ON usager.usager_id = usager_x_produit.usager_id;
+
+CREATE VIEW machine_template_page AS
+    SELECT
+        projet.type_de_machine.image_type_machine,
+        projet.type_de_machine.model,
+        projet.type_de_machine.manufacturier,
+        projet.usager_x_machines.usager_id
+    FROM
+        projet.type_de_machine
+            JOIN projet.machine ON machine.type_m_id = type_de_machine.type_m_id
+            JOIN projet.usager_x_machines ON machine.machine_id = usager_x_machines.machine_id
+
+CREATE VIEW machine_template_specific AS
+    SELECT
+        projet.type_de_machine.*,
+        projet.usager_x_machines.usager_id
+    FROM
+        projet.type_de_machine
+            JOIN projet.machine ON machine.type_m_id = type_de_machine.type_m_id
+            JOIN projet.usager_x_machines ON machine.machine_id = usager_x_machines.machine_id
+
+CREATE VIEW product_template_page AS
+    SELECT
+        projet.type_de_produit.image_type_produit,
+        projet.type_de_produit.nom,
+        projet.type_de_produit.marge,
+        projet.usager_x_produit.usager_id
+    FROM
+        projet.type_de_produit
+            JOIN projet.produit ON produit.type_p_id = type_de_produit.type_p_id
+            JOIN projet.usager_x_produit ON produit.produit_id = usager_x_produit.produit_id
+
+CREATE VIEW product_template_specific AS
+    SELECT
+        projet.type_de_produit.*,
+        projet.usager_x_produit.usager_id
+    FROM
+        projet.type_de_produit
+            JOIN projet.produit ON produit.type_p_id = type_de_produit.type_p_id
+            JOIN projet.usager_x_produit ON produit.produit_id = usager_x_produit.produit_id
