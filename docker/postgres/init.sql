@@ -308,7 +308,7 @@ CREATE VIEW machine_template_page AS
     FROM
         projet.type_de_machine
             JOIN projet.machine ON machine.type_m_id = type_de_machine.type_m_id
-            JOIN projet.usager_x_machines ON machine.machine_id = usager_x_machines.machine_id
+            JOIN projet.usager_x_machines ON machine.machine_id = usager_x_machines.machine_id;
 
 CREATE VIEW machine_template_specific AS
     SELECT
@@ -317,7 +317,7 @@ CREATE VIEW machine_template_specific AS
     FROM
         projet.type_de_machine
             JOIN projet.machine ON machine.type_m_id = type_de_machine.type_m_id
-            JOIN projet.usager_x_machines ON machine.machine_id = usager_x_machines.machine_id
+            JOIN projet.usager_x_machines ON machine.machine_id = usager_x_machines.machine_id;
 
 CREATE VIEW product_template_page AS
     SELECT
@@ -328,7 +328,7 @@ CREATE VIEW product_template_page AS
     FROM
         projet.type_de_produit
             JOIN projet.produit ON produit.type_p_id = type_de_produit.type_p_id
-            JOIN projet.usager_x_produit ON produit.produit_id = usager_x_produit.produit_id
+            JOIN projet.usager_x_produit ON produit.produit_id = usager_x_produit.produit_id;
 
 CREATE VIEW product_template_specific AS
     SELECT
@@ -337,4 +337,4 @@ CREATE VIEW product_template_specific AS
     FROM
         projet.type_de_produit
             JOIN projet.produit ON produit.type_p_id = type_de_produit.type_p_id
-            JOIN projet.usager_x_produit ON produit.produit_id = usager_x_produit.produit_id
+            JOIN projet.usager_x_produit ON produit.produit_id = usager_x_produit.produit_id;
