@@ -85,6 +85,8 @@ CREATE TABLE type_de_produit(
    image_type_p VARCHAR(50) ,
    nom_type_p VARCHAR(50) ,
    marge_type_p INTEGER,
+   model_type_p VARCHAR(50) ,
+   manufacturier_type_p VARCHAR(50) ,
    id_dimension INTEGER NOT NULL,
    PRIMARY KEY(id_type_p),
    FOREIGN KEY(id_dimension) REFERENCES dimension(id_dimension)
@@ -225,8 +227,8 @@ VALUES ('Model 1', 'Manufacturier 1', 'No de série 1', 'image');
 INSERT INTO projet.dimension (nom_dimension, largeur_dimension, hauteur_dimension, longueur_dimension, forme_dimension, produit_par_unite_dimension, est_emballe_dimension)
 VALUES ('machine 1', 1, 1, 1, 'Forme 1', 1, TRUE);
 
-INSERT INTO projet.type_de_produit (image_type_p, nom_type_p, marge_type_p, id_dimension)
-VALUES ('image', 'type 1', 1, 1);
+INSERT INTO projet.type_de_produit (image_type_p, nom_type_p, marge_type_p, id_dimension, model_type_p, manufacturier_type_p)
+VALUES ('image', 'type 1', 1, 1, 'model', 'manufacturier');
 
 INSERT INTO projet.produit (quantite_produit, prix_achat_produit, image_produit, nom_produit, id_type_p)
 VALUES (1, 1, 'image', 'Nom produit 1', 1);
@@ -260,7 +262,7 @@ VALUES (1, 1);
 
 -- Création de Vue pour la comunication avec le backend
 
-CREATE VIEW machine_inventory_page AS
+CREATE OR REPLACE VIEW machine_inventory_page AS
 SELECT
     projet.machine.nom_machine,
     projet.machine.image_machine,
@@ -270,7 +272,7 @@ FROM
         JOIN projet.machine ON machine.id_machine = usager_x_machines.id_machine
         JOIN projet.usager ON usager.id_usager = usager_x_machines.id_usager;
 
-CREATE VIEW machine_inventory_specific AS
+CREATE OR REPLACE VIEW machine_inventory_specific AS
 SELECT
     projet.machine.*,
     projet.usager.id_usager
@@ -279,7 +281,7 @@ FROM
         JOIN projet.machine ON machine.id_machine = usager_x_machines.id_machine
         JOIN projet.usager ON usager.id_usager = usager_x_machines.id_usager;
 
-CREATE VIEW product_inventory_page AS
+CREATE OR REPLACE VIEW product_inventory_page AS
 SELECT
     projet.produit.image_produit,
     projet.produit.quantite_produit,
@@ -290,7 +292,7 @@ FROM
         JOIN projet.produit ON produit.id_produit = usager_x_produit.id_produit
         JOIN projet.usager ON usager.id_usager = usager_x_produit.id_usager;
 
-CREATE VIEW product_inventory_specific AS
+CREATE OR REPLACE VIEW product_inventory_specific AS
 SELECT
     projet.produit.*,
     projet.usager.id_usager
@@ -299,7 +301,7 @@ FROM
         JOIN projet.produit ON produit.id_produit = usager_x_produit.id_produit
         JOIN projet.usager ON usager.id_usager = usager_x_produit.id_usager;
 
-CREATE VIEW machine_template_page AS
+CREATE OR REPLACE VIEW machine_template_page AS
     SELECT
         projet.type_de_machine.image_type_m,
         projet.type_de_machine.model_type_m,
@@ -310,7 +312,7 @@ CREATE VIEW machine_template_page AS
             JOIN projet.machine ON machine.id_type_m = type_de_machine.id_type_m
             JOIN projet.usager_x_machines ON machine.id_machine = usager_x_machines.id_machine;
 
-CREATE VIEW machine_template_specific AS
+CREATE OR REPLACE VIEW machine_template_specific AS
     SELECT
         projet.type_de_machine.*,
         projet.usager_x_machines.id_usager
@@ -319,18 +321,18 @@ CREATE VIEW machine_template_specific AS
             JOIN projet.machine ON machine.id_type_m = type_de_machine.id_type_m
             JOIN projet.usager_x_machines ON machine.id_machine = usager_x_machines.id_machine;
 
-CREATE VIEW product_template_page AS
+CREATE OR REPLACE VIEW product_template_page AS
     SELECT
         projet.type_de_produit.image_type_p,
-        projet.type_de_produit.nom_type_p,
-        projet.type_de_produit.marge_type_p,
+        projet.type_de_produit.manufacturier_type_p,
+        projet.type_de_produit.model_type_p,
         projet.usager_x_produit.id_usager
     FROM
         projet.type_de_produit
             JOIN projet.produit ON produit.id_type_p = type_de_produit.id_type_p
             JOIN projet.usager_x_produit ON produit.id_produit = usager_x_produit.id_produit;
 
-CREATE VIEW product_template_specific AS
+CREATE OR REPLACE VIEW product_template_specific AS
     SELECT
         projet.type_de_produit.*,
         projet.usager_x_produit.id_usager
