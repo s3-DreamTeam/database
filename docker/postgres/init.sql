@@ -60,7 +60,7 @@ CREATE TABLE usager(
    id_usager SERIAL,
    nom_usager VARCHAR(50) ,
    prenom_usager VARCHAR(50) ,
-   usager_solde INTEGER,
+   solde_usager INTEGER,
    email_usager VARCHAR(50) ,
    profil_pic_usager VARCHAR(50) ,
    id_status INTEGER NOT NULL,
