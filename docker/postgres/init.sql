@@ -248,9 +248,9 @@ VALUES ('Caractéristique produit 1', 1);
 INSERT INTO projet.machine (emplacement_machine, nom_machine, id_type_m, id_remplissage)
 VALUES ('Emplacement 1', 'Nom 1', 1, 1);
 
-INSERT INTO projet.usager (nom_usager, prenom_usager, usager_solde, email_usager, profil_pic_usager, id_status)
+INSERT INTO projet.usager (nom_usager, prenom_usager, solde_usager, email_usager, profil_pic_usager, id_status)
 VALUES ('Nom 1', 'Prenom 1', 1, 'test', 'test', 1);
-INSERT INTO projet.usager (nom_usager, prenom_usager, usager_solde, email_usager, profil_pic_usager, id_status)
+INSERT INTO projet.usager (nom_usager, prenom_usager, solde_usager, email_usager, profil_pic_usager, id_status)
 VALUES ('Nom 2', 'Prenom 2', 2, 'test', 'test', 2);
 
 INSERT INTO projet.usager_x_machines (id_usager, id_machine)
