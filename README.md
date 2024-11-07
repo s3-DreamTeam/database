@@ -11,4 +11,3 @@ Ouvrez un terminal à partir de cet emplacement et écrire la commande `sudo doc
 # si vous voulez réavoir les données de base:
 
 dans le même terminal écrivez `sudo docker compose down` puis `sudo docker compose up -d`
-
