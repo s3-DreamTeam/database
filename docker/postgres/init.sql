@@ -1,10 +1,12 @@
 CREATE SCHEMA Projet;
 set search_path = Projet;
 
-CREATE TABLE status(
-   id_status SERIAL,
-   nom_status VARCHAR(50) ,
-   PRIMARY KEY(id_status)
+CREATE TABLE usager(
+   id_usager VARCHAR(50) ,
+   nom_usager VARCHAR(50) ,
+   prenom_usager VARCHAR(50) ,
+   solde_usager INTEGER,
+   PRIMARY KEY(id_usager)
 );
 
 CREATE TABLE inventaire(
@@ -54,18 +56,6 @@ CREATE TABLE type_de_caracteristique_machine(
    id_type_caracteristique_m SERIAL,
    nom_type_caracteristique_m VARCHAR(50) ,
    PRIMARY KEY(id_type_caracteristique_m)
-);
-
-CREATE TABLE usager(
-   id_usager SERIAL,
-   nom_usager VARCHAR(50) ,
-   prenom_usager VARCHAR(50) ,
-   solde_usager INTEGER,
-   email_usager VARCHAR(50) ,
-   profil_pic_usager VARCHAR(50) ,
-   id_status INTEGER NOT NULL,
-   PRIMARY KEY(id_usager),
-   FOREIGN KEY(id_status) REFERENCES status(id_status)
 );
 
 CREATE TABLE machine(
@@ -138,7 +128,7 @@ CREATE TABLE inventaire_x_produit(
 );
 
 CREATE TABLE usager_x_achat(
-   id_usager INTEGER,
+   id_usager VARCHAR(50) ,
    id_achat INTEGER,
    PRIMARY KEY(id_usager, id_achat),
    FOREIGN KEY(id_usager) REFERENCES usager(id_usager),
@@ -154,7 +144,7 @@ CREATE TABLE achat_x_produit(
 );
 
 CREATE TABLE usager_x_remplissage(
-   id_usager INTEGER,
+   id_usager VARCHAR(50) ,
    id_remplissage INTEGER,
    PRIMARY KEY(id_usager, id_remplissage),
    FOREIGN KEY(id_usager) REFERENCES usager(id_usager),
@@ -162,7 +152,7 @@ CREATE TABLE usager_x_remplissage(
 );
 
 CREATE TABLE usager_x_machines(
-   id_usager INTEGER,
+   id_usager VARCHAR(50) ,
    id_machine INTEGER,
    PRIMARY KEY(id_usager, id_machine),
    FOREIGN KEY(id_usager) REFERENCES usager(id_usager),
@@ -194,19 +184,15 @@ CREATE TABLE type_produit_x_caracterisitque(
 );
 
 CREATE TABLE usager_x_produit(
-   id_usager INTEGER,
+   id_usager VARCHAR(50) ,
    id_produit INTEGER,
    PRIMARY KEY(id_usager, id_produit),
    FOREIGN KEY(id_usager) REFERENCES usager(id_usager),
    FOREIGN KEY(id_produit) REFERENCES produit(id_produit)
 );
 
--- Insertion de données dans la base de données
 
-INSERT INTO projet.status (nom_status)
-VALUES ('Client');
-INSERT INTO projet.status (nom_status)
-VALUES ( 'Gestionnaire');
+-- Insertion de données dans la base de données
 
 INSERT INTO projet.type_de_caracteristique_machine (nom_type_caracteristique_m)
 VALUES ('Type de machine 1');
@@ -248,16 +234,14 @@ VALUES ('Caractéristique produit 1', 1);
 INSERT INTO projet.machine (emplacement_machine, nom_machine, id_type_m, id_remplissage)
 VALUES ('Emplacement 1', 'Nom 1', 1, 1);
 
-INSERT INTO projet.usager (nom_usager, prenom_usager, solde_usager, email_usager, profil_pic_usager, id_status)
-VALUES ('Nom 1', 'Prenom 1', 1, 'test', 'test', 1);
-INSERT INTO projet.usager (nom_usager, prenom_usager, solde_usager, email_usager, profil_pic_usager, id_status)
-VALUES ('Nom 2', 'Prenom 2', 2, 'test', 'test', 2);
+INSERT INTO projet.usager (id_usager)
+VALUES ('graf2102');
 
 INSERT INTO projet.usager_x_machines (id_usager, id_machine)
-VALUES (1, 1);
+VALUES ('graf2102', 1);
 
 INSERT INTO projet.usager_x_produit (id_usager, id_produit)
-VALUES (1, 1);
+VALUES ('graf2102', 1);
 
 
 -- Création de Vue pour la comunication avec le backend
