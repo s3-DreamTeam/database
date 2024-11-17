@@ -20,17 +20,14 @@ CREATE TABLE achat(
    PRIMARY KEY(id_achat)
 );
 
-CREATE TABLE remplissage(
-   id_remplissage SERIAL,
-   PRIMARY KEY(id_remplissage)
-);
-
 CREATE TABLE type_de_machine(
    id_type_m SERIAL,
    model_type_m VARCHAR(50) ,
    manufacturier_type_m VARCHAR(50) ,
-   no_serie_type_m VARCHAR(50) ,
-   image_type_m VARCHAR(20000) ,
+   image_type_m VARCHAR(8000) ,
+   row_type_m INTEGER,
+   column_type_m INTEGER,
+   quantity_type_m INTEGER,
    PRIMARY KEY(id_type_m)
 );
 
@@ -62,17 +59,16 @@ CREATE TABLE machine(
    id_machine SERIAL,
    emplacement_machine VARCHAR(50) ,
    nom_machine VARCHAR(50) ,
-   image_machine VARCHAR(20000) ,
+   image_machine VARCHAR(8000) ,
+   no_serie VARCHAR(50) ,
    id_type_m INTEGER NOT NULL,
-   id_remplissage INTEGER NOT NULL,
    PRIMARY KEY(id_machine),
-   FOREIGN KEY(id_type_m) REFERENCES type_de_machine(id_type_m),
-   FOREIGN KEY(id_remplissage) REFERENCES remplissage(id_remplissage)
+   FOREIGN KEY(id_type_m) REFERENCES type_de_machine(id_type_m)
 );
 
 CREATE TABLE type_de_produit(
    id_type_p SERIAL,
-   image_type_p VARCHAR(20000) ,
+   image_type_p VARCHAR(8000) ,
    nom_type_p VARCHAR(50) ,
    marge_type_p INTEGER,
    model_type_p VARCHAR(50) ,
@@ -104,7 +100,7 @@ CREATE TABLE produit(
    id_produit SERIAL,
    quantite_produit INTEGER,
    prix_achat_produit INTEGER,
-   image_produit VARCHAR(20000) ,
+   image_produit VARCHAR(8000) ,
    nom_produit VARCHAR(50) ,
    id_type_p INTEGER NOT NULL,
    PRIMARY KEY(id_produit),
@@ -143,28 +139,12 @@ CREATE TABLE achat_x_produit(
    FOREIGN KEY(id_achat) REFERENCES achat(id_achat)
 );
 
-CREATE TABLE usager_x_remplissage(
-   id_usager VARCHAR(50) ,
-   id_remplissage INTEGER,
-   PRIMARY KEY(id_usager, id_remplissage),
-   FOREIGN KEY(id_usager) REFERENCES usager(id_usager),
-   FOREIGN KEY(id_remplissage) REFERENCES remplissage(id_remplissage)
-);
-
 CREATE TABLE usager_x_machines(
    id_usager VARCHAR(50) ,
    id_machine INTEGER,
    PRIMARY KEY(id_usager, id_machine),
    FOREIGN KEY(id_usager) REFERENCES usager(id_usager),
    FOREIGN KEY(id_machine) REFERENCES machine(id_machine)
-);
-
-CREATE TABLE remplissage_x_produit(
-   id_produit INTEGER,
-   id_remplissage INTEGER,
-   PRIMARY KEY(id_produit, id_remplissage),
-   FOREIGN KEY(id_produit) REFERENCES produit(id_produit),
-   FOREIGN KEY(id_remplissage) REFERENCES remplissage(id_remplissage)
 );
 
 CREATE TABLE type_machine_x_caracteristique(
@@ -207,8 +187,8 @@ VALUES ('Type de produit 2');
 INSERT INTO projet.caracteristique_machine (nom_caracteristique_m, description_caracteristique_m, type_caracteristique_m, id_type_caracteristique_m)
 VALUES ('Caractéristique machine 1', 'Description 1', 1, 1);
 
-INSERT INTO projet.type_de_machine (model_type_m, manufacturier_type_m, no_serie_type_m, image_type_m)
-VALUES ('Model 1', 'Manufacturier 1', 'No de série 1', 'image');
+INSERT INTO projet.type_de_machine (model_type_m, manufacturier_type_m, image_type_m, row_type_m, column_type_m, quantity_type_m)
+VALUES ('Model 1', 'Manufacturier 1', 'image', 1, 1, 1);
 
 INSERT INTO projet.dimension (nom_dimension, largeur_dimension, hauteur_dimension, longueur_dimension, forme_dimension, produit_par_unite_dimension, est_emballe_dimension)
 VALUES ('machine 1', 1, 1, 1, 'Forme 1', 1, TRUE);
@@ -225,14 +205,11 @@ VALUES (1);
 INSERT INTO projet.achat (produit_achat)
 VALUES ('1');
 
-INSERT INTO projet.remplissage (id_remplissage)
-VALUES (1);
-
 INSERT INTO projet.caracteristique_produit (nom_caracteristique_p, id_type_caracteristique_p)
 VALUES ('Caractéristique produit 1', 1);
 
-INSERT INTO projet.machine (emplacement_machine, nom_machine, id_type_m, id_remplissage)
-VALUES ('Emplacement 1', 'Nom 1', 1, 1);
+INSERT INTO projet.machine (emplacement_machine, nom_machine, image_machine, no_serie, id_type_m)
+VALUES ('Emplacement 1', 'Nom 1', 'asdf', 1, 1);
 
 -- Insert into projet.usager
 INSERT INTO projet.usager (id_usager)

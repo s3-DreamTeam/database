@@ -1,11 +1,26 @@
-INSERT INTO projet.usager_x_machines (usager_id, machine_id)
-VALUES (1, 1);
-
-CREATE VIEW machine_usager AS
 SELECT
-    projet.machine.machine_id,
-    projet.usager.nom
+    image_machine,
+    nom_machine,
+    emplacement_machine,
+    no_serie,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    id_type_m
+
 FROM
-  projet.usager_x_machines
-    JOIN projet.machine ON machine.machine_id = usager_x_machines.machine_id
-    JOIN projet.usager ON usager.usager_id = usager_x_machines.usager_id;
+    projet.machine
+WHERE
+    id_machine = 1
+
