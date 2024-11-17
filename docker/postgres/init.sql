@@ -24,7 +24,7 @@ CREATE TABLE type_de_machine(
    id_type_m SERIAL,
    model_type_m VARCHAR(50) ,
    manufacturier_type_m VARCHAR(50) ,
-   image_type_m VARCHAR(8000) ,
+   image_type_m VARCHAR(20000) ,
    row_type_m INTEGER,
    column_type_m INTEGER,
    quantity_type_m INTEGER,
@@ -59,7 +59,7 @@ CREATE TABLE machine(
    id_machine SERIAL,
    emplacement_machine VARCHAR(50) ,
    nom_machine VARCHAR(50) ,
-   image_machine VARCHAR(8000) ,
+   image_machine VARCHAR(20000) ,
    no_serie VARCHAR(50) ,
    id_type_m INTEGER NOT NULL,
    PRIMARY KEY(id_machine),
@@ -68,7 +68,7 @@ CREATE TABLE machine(
 
 CREATE TABLE type_de_produit(
    id_type_p SERIAL,
-   image_type_p VARCHAR(8000) ,
+   image_type_p VARCHAR(20000) ,
    nom_type_p VARCHAR(50) ,
    marge_type_p INTEGER,
    model_type_p VARCHAR(50) ,
