@@ -262,12 +262,12 @@ VALUES
 -- Insert into projet.usager_x_machines
 INSERT INTO projet.usager_x_machines (id_usager, id_machine)
 VALUES 
-    ('graf2102', 1)
+    ('graf2102', 1);
 
 -- Insert into projet.usager_x_produit
 INSERT INTO projet.usager_x_produit (id_usager, id_produit)
 VALUES 
-    ('graf2102', 1)
+    ('graf2102', 1);
 
 
 
