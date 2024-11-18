@@ -28,7 +28,9 @@ CREATE TABLE type_de_machine(
    row_type_m INTEGER,
    column_type_m INTEGER,
    quantity_type_m INTEGER,
-   PRIMARY KEY(id_type_m)
+   id_usager VARCHAR(50) ,
+   PRIMARY KEY(id_type_m),
+   FOREIGN KEY(id_usager) REFERENCES usager(id_usager)
 );
 
 CREATE TABLE dimension(
@@ -172,48 +174,10 @@ CREATE TABLE usager_x_produit(
 );
 
 
+
 -- Insertion de données dans la base de données
-
-INSERT INTO projet.type_de_caracteristique_machine (nom_type_caracteristique_m)
-VALUES ('Type de machine 1');
-INSERT INTO projet.type_de_caracteristique_machine (nom_type_caracteristique_m)
-VALUES ('Type de machine 2');
-
-INSERT INTO projet.type_de_caracteristique_produit (nom_type_caracteristique_p)
-VALUES ('Type de produit 1');
-INSERT INTO projet.type_de_caracteristique_produit (nom_type_caracteristique_p)
-VALUES ('Type de produit 2');
-
-INSERT INTO projet.caracteristique_machine (nom_caracteristique_m, description_caracteristique_m, type_caracteristique_m, id_type_caracteristique_m)
-VALUES ('Caractéristique machine 1', 'Description 1', 1, 1);
-
-INSERT INTO projet.type_de_machine (model_type_m, manufacturier_type_m, image_type_m, row_type_m, column_type_m, quantity_type_m)
-VALUES ('Model 1', 'Manufacturier 1', 'image', 1, 1, 1);
-
-INSERT INTO projet.dimension (nom_dimension, largeur_dimension, hauteur_dimension, longueur_dimension, forme_dimension, produit_par_unite_dimension, est_emballe_dimension)
-VALUES ('machine 1', 1, 1, 1, 'Forme 1', 1, TRUE);
-
-INSERT INTO projet.type_de_produit (image_type_p, nom_type_p, marge_type_p, id_dimension, model_type_p, manufacturier_type_p)
-VALUES ('image', 'type 1', 1, 1, 'model', 'manufacturier');
-
-INSERT INTO projet.produit (quantite_produit, prix_achat_produit, image_produit, nom_produit, id_type_p)
-VALUES (1, 1, 'image', 'Nom produit 1', 1);
-
-INSERT INTO projet.inventaire (id_inventaire)
-VALUES (1);
-
-INSERT INTO projet.achat (produit_achat)
-VALUES ('1');
-
-INSERT INTO projet.caracteristique_produit (nom_caracteristique_p, id_type_caracteristique_p)
-VALUES ('Caractéristique produit 1', 1);
-
-INSERT INTO projet.machine (emplacement_machine, nom_machine, image_machine, no_serie, id_type_m)
-VALUES ('Emplacement 1', 'Nom 1', 'asdf', 1, 1);
-
--- Insert into projet.usager
 INSERT INTO projet.usager (id_usager)
-VALUES 
+VALUES
     ('rama2001'),
     ('gasb3002'),
     ('pald2501'),
@@ -258,6 +222,46 @@ VALUES
     ('farg2101'),
     ('lesj0901'),
     ('stel2002');
+
+INSERT INTO projet.type_de_caracteristique_machine (nom_type_caracteristique_m)
+VALUES ('Type de machine 1');
+INSERT INTO projet.type_de_caracteristique_machine (nom_type_caracteristique_m)
+VALUES ('Type de machine 2');
+
+INSERT INTO projet.type_de_caracteristique_produit (nom_type_caracteristique_p)
+VALUES ('Type de produit 1');
+INSERT INTO projet.type_de_caracteristique_produit (nom_type_caracteristique_p)
+VALUES ('Type de produit 2');
+
+INSERT INTO projet.caracteristique_machine (nom_caracteristique_m, description_caracteristique_m, type_caracteristique_m, id_type_caracteristique_m)
+VALUES ('Caractéristique machine 1', 'Description 1', 1, 1);
+
+INSERT INTO projet.type_de_machine (model_type_m, manufacturier_type_m, image_type_m, row_type_m, column_type_m, quantity_type_m, id_usager)
+VALUES ('Model 1', 'Manufacturier 1', 'image', 1, 1, 1, 'graf2102');
+
+INSERT INTO projet.dimension (nom_dimension, largeur_dimension, hauteur_dimension, longueur_dimension, forme_dimension, produit_par_unite_dimension, est_emballe_dimension)
+VALUES ('machine 1', 1, 1, 1, 'Forme 1', 1, TRUE);
+
+INSERT INTO projet.type_de_produit (image_type_p, nom_type_p, marge_type_p, id_dimension, model_type_p, manufacturier_type_p)
+VALUES ('image', 'type 1', 1, 1, 'model', 'manufacturier');
+
+INSERT INTO projet.produit (quantite_produit, prix_achat_produit, image_produit, nom_produit, id_type_p)
+VALUES (1, 1, 'image', 'Nom produit 1', 1);
+
+INSERT INTO projet.inventaire (id_inventaire)
+VALUES (1);
+
+INSERT INTO projet.achat (produit_achat)
+VALUES ('1');
+
+INSERT INTO projet.caracteristique_produit (nom_caracteristique_p, id_type_caracteristique_p)
+VALUES ('Caractéristique produit 1', 1);
+
+INSERT INTO projet.machine (emplacement_machine, nom_machine, image_machine, no_serie, id_type_m)
+VALUES ('Emplacement 1', 'Nom 1', 'asdf', 1, 1);
+
+-- Insert into projet.usager
+
 
 -- Insert into projet.usager_x_machines
 INSERT INTO projet.usager_x_machines (id_usager, id_machine)
@@ -323,14 +327,14 @@ CREATE OR REPLACE VIEW machine_template_page AS
             JOIN projet.machine ON machine.id_type_m = type_de_machine.id_type_m
             JOIN projet.usager_x_machines ON machine.id_machine = usager_x_machines.id_machine;
 
-CREATE OR REPLACE VIEW machine_template_specific AS
-    SELECT
-        projet.type_de_machine.*,
-        projet.usager_x_machines.id_usager
-    FROM
-        projet.type_de_machine
-            JOIN projet.machine ON machine.id_type_m = type_de_machine.id_type_m
-            JOIN projet.usager_x_machines ON machine.id_machine = usager_x_machines.id_machine;
+-- CREATE OR REPLACE VIEW machine_template_specific AS
+--     SELECT
+--         projet.type_de_machine.*,
+--         projet.usager_x_machines.id_usager
+--     FROM
+--         projet.type_de_machine
+--             JOIN projet.machine ON machine.id_type_m = type_de_machine.id_type_m
+--             JOIN projet.usager_x_machines ON machine.id_machine = usager_x_machines.id_machine;
 
 CREATE OR REPLACE VIEW product_template_page AS
     SELECT
