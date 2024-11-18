@@ -1,26 +1,7 @@
 SELECT
-    image_machine,
-    nom_machine,
-    emplacement_machine,
-    no_serie,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    id_type_m
-
-FROM
-    projet.machine
-WHERE
-    id_machine = 1
-
+            manufacturier_type_m,
+            model_type_m,
+            id_type_m
+        FROM
+            projet.type_de_machine
+        WHERE id_type_m = 1 AND id_usager = 'graf2102';
