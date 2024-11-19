@@ -64,8 +64,10 @@ CREATE TABLE machine(
    image_machine VARCHAR(20000) ,
    no_serie VARCHAR(50) ,
    id_type_m INTEGER NOT NULL,
+   id_usager VARCHAR(50)  NOT NULL,
    PRIMARY KEY(id_machine),
-   FOREIGN KEY(id_type_m) REFERENCES type_de_machine(id_type_m)
+   FOREIGN KEY(id_type_m) REFERENCES type_de_machine(id_type_m),
+   FOREIGN KEY(id_usager) REFERENCES usager(id_usager)
 );
 
 CREATE TABLE type_de_produit(
@@ -143,14 +145,6 @@ CREATE TABLE achat_x_produit(
    PRIMARY KEY(id_machine, id_achat),
    FOREIGN KEY(id_machine) REFERENCES machine(id_machine),
    FOREIGN KEY(id_achat) REFERENCES achat(id_achat)
-);
-
-CREATE TABLE usager_x_machines(
-   id_usager VARCHAR(50) ,
-   id_machine INTEGER,
-   PRIMARY KEY(id_usager, id_machine),
-   FOREIGN KEY(id_usager) REFERENCES usager(id_usager),
-   FOREIGN KEY(id_machine) REFERENCES machine(id_machine)
 );
 
 CREATE TABLE type_machine_x_caracteristique(
@@ -252,10 +246,5 @@ VALUES ('1');
 INSERT INTO projet.caracteristique_produit (nom_caracteristique_p, id_type_caracteristique_p)
 VALUES ('Caractéristique produit 1', 1);
 
-INSERT INTO projet.machine (emplacement_machine, nom_machine, image_machine, no_serie, id_type_m)
-VALUES ('Emplacement 1', 'Nom 1', 'asdf', 1, 1);
-
--- Insert into projet.usager_x_machines
-INSERT INTO projet.usager_x_machines (id_usager, id_machine)
-VALUES 
-    ('graf2102', 1);
+INSERT INTO projet.machine (emplacement_machine, nom_machine, image_machine, no_serie, id_type_m, id_usager)
+VALUES ('Emplacement 1', 'Nom 1', 'asdf', 1, 1, 'graf2102');
