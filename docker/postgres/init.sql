@@ -9,11 +9,6 @@ CREATE TABLE usager(
    PRIMARY KEY(id_usager)
 );
 
-CREATE TABLE inventaire(
-   id_inventaire SERIAL,
-   PRIMARY KEY(id_inventaire)
-);
-
 CREATE TABLE achat(
    id_achat SERIAL,
    produit_achat VARCHAR(50) ,
@@ -24,7 +19,7 @@ CREATE TABLE type_de_machine(
    id_type_m SERIAL,
    model_type_m VARCHAR(50) ,
    manufacturier_type_m VARCHAR(50) ,
-   image_type_m VARCHAR(20000) ,
+   image_type_m VARCHAR(2000) ,
    row_type_m INTEGER,
    column_type_m INTEGER,
    quantity_type_m INTEGER,
@@ -61,7 +56,7 @@ CREATE TABLE machine(
    id_machine SERIAL,
    emplacement_machine VARCHAR(50) ,
    nom_machine VARCHAR(50) ,
-   image_machine VARCHAR(20000) ,
+   image_machine VARCHAR(2000) ,
    no_serie VARCHAR(50) ,
    id_type_m INTEGER NOT NULL,
    id_usager VARCHAR(50)  NOT NULL,
@@ -72,7 +67,7 @@ CREATE TABLE machine(
 
 CREATE TABLE type_de_produit(
    id_type_p SERIAL,
-   image_type_p VARCHAR(20000) ,
+   image_type_p VARCHAR(8000) ,
    nom_type_p VARCHAR(50) ,
    marge_type_p INTEGER,
    model_type_p VARCHAR(50) ,
@@ -106,7 +101,7 @@ CREATE TABLE produit(
    id_produit SERIAL,
    quantite_produit INTEGER,
    prix_achat_produit INTEGER,
-   image_produit VARCHAR(20000) ,
+   image_produit VARCHAR(2000) ,
    nom_produit VARCHAR(50) ,
    id_usager VARCHAR(50)  NOT NULL,
    id_type_p INTEGER NOT NULL,
@@ -115,20 +110,15 @@ CREATE TABLE produit(
    FOREIGN KEY(id_type_p) REFERENCES type_de_produit(id_type_p)
 );
 
-CREATE TABLE machine_x_inventaire(
-   id_machine INTEGER,
-   id_inventaire INTEGER,
-   PRIMARY KEY(id_machine, id_inventaire),
-   FOREIGN KEY(id_machine) REFERENCES machine(id_machine),
-   FOREIGN KEY(id_inventaire) REFERENCES inventaire(id_inventaire)
-);
-
-CREATE TABLE inventaire_x_produit(
-   id_inventaire INTEGER,
-   id_produit INTEGER,
-   PRIMARY KEY(id_inventaire, id_produit),
-   FOREIGN KEY(id_inventaire) REFERENCES inventaire(id_inventaire),
-   FOREIGN KEY(id_produit) REFERENCES produit(id_produit)
+CREATE TABLE inventaire(
+   id_inventaire SERIAL,
+   column_inventaire INTEGER,
+   row_inventaire INTEGER,
+   id_produit INTEGER NOT NULL,
+   id_machine INTEGER NOT NULL,
+   PRIMARY KEY(id_inventaire),
+   FOREIGN KEY(id_produit) REFERENCES produit(id_produit),
+   FOREIGN KEY(id_machine) REFERENCES machine(id_machine)
 );
 
 CREATE TABLE usager_x_achat(
@@ -237,8 +227,11 @@ VALUES ('image', 'type 1',1, 'model', 'manufacturier', 'graf2102', 1);
 INSERT INTO projet.produit (quantite_produit, prix_achat_produit, image_produit, nom_produit, id_usager, id_type_p)
 VALUES (1, 1, 'image', 'Nom produit 1', 'graf2102', 1);
 
-INSERT INTO projet.inventaire (id_inventaire)
-VALUES (1);
+INSERT INTO projet.machine (emplacement_machine, nom_machine, image_machine, no_serie, id_type_m, id_usager)
+VALUES ('Emplacement 1', 'Nom 1', 'asdf', 1, 1, 'graf2102');
+
+INSERT INTO projet.inventaire (id_inventaire, column_inventaire, row_inventaire, id_produit, id_machine)
+VALUES (1, 1, 1, 1, 1);
 
 INSERT INTO projet.achat (produit_achat)
 VALUES ('1');
@@ -246,5 +239,3 @@ VALUES ('1');
 INSERT INTO projet.caracteristique_produit (nom_caracteristique_p, id_type_caracteristique_p)
 VALUES ('Caractéristique produit 1', 1);
 
-INSERT INTO projet.machine (emplacement_machine, nom_machine, image_machine, no_serie, id_type_m, id_usager)
-VALUES ('Emplacement 1', 'Nom 1', 'asdf', 1, 1, 'graf2102');
