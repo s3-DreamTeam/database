@@ -8,11 +8,11 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="postgres@zacse.org" uuid="1ec5675c-a5c5-4a65-a046-20a6dd207862">
+    <data-source source="LOCAL" name="postgres@100.79.218.126" uuid="54d39d80-e909-4569-a953-e73de9a915eb">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://zacse.org:5432/postgres</jdbc-url>
+      <jdbc-url>jdbc:postgresql://100.79.218.126:8889/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

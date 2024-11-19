@@ -112,8 +112,7 @@ CREATE TABLE produit(
 
 CREATE TABLE inventaire(
    id_inventaire SERIAL,
-   column_inventaire INTEGER,
-   row_inventaire INTEGER,
+   slot_inventaire VARCHAR(50) ,
    id_produit INTEGER NOT NULL,
    id_machine INTEGER NOT NULL,
    PRIMARY KEY(id_inventaire),
@@ -230,8 +229,8 @@ VALUES (1, 1, 'image', 'Nom produit 1', 'graf2102', 1);
 INSERT INTO projet.machine (emplacement_machine, nom_machine, image_machine, no_serie, id_type_m, id_usager)
 VALUES ('Emplacement 1', 'Nom 1', 'asdf', 1, 1, 'graf2102');
 
-INSERT INTO projet.inventaire (id_inventaire, column_inventaire, row_inventaire, id_produit, id_machine)
-VALUES (1, 1, 1, 1, 1);
+INSERT INTO projet.inventaire (id_inventaire, slot_inventaire, id_produit, id_machine)
+VALUES (1, 'A1', 1, 1);
 
 INSERT INTO projet.achat (produit_achat)
 VALUES ('1');
