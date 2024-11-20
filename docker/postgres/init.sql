@@ -231,7 +231,7 @@ INSERT INTO projet.machine (emplacement_machine, nom_machine, image_machine, no_
 VALUES ('Emplacement 1', 'Nom 1', 'asdf', 1, 1, 'graf2102');
 
 INSERT INTO projet.inventaire (id_inventaire, slot_inventaire, quantite_inventaire, id_produit, id_machine)
-VALUES (1, 'A1', 0,1, 1);
+VALUES (2, 'A1', 67,1, 1);
 
 INSERT INTO projet.achat (produit_achat)
 VALUES ('1');
@@ -239,3 +239,5 @@ VALUES ('1');
 INSERT INTO projet.caracteristique_produit (nom_caracteristique_p, id_type_caracteristique_p)
 VALUES ('Caractéristique produit 1', 1);
 
+INSERT INTO projet.produit (quantite_produit, prix_achat_produit, image_produit, nom_produit, id_usager, id_type_p)
+VALUES (5, 25, 'image', 'Nom produit 1', 'graf2102', 1);
