@@ -1,3 +1,4 @@
- UPDATE projet.inventaire
-        SET id_produit = 1, quantite_inventaire = 0
-        WHERE id_machine = 1 AND slot_inventaire = 'A1';
+SELECT
+            id_machine
+        FROM projet.machine
+        WHERE id_machine = (SELECT MAX(id_machine) FROM projet.machine)
