@@ -203,6 +203,8 @@ VALUES
     ('stel2002'),
     ('default');
 
+INSERT INTO projet.dimension (nom_dimension, largeur_dimension, hauteur_dimension, longueur_dimension, forme_dimension, produit_par_unite_dimension, est_emballe_dimension)
+VALUES ('dimension 1', 1, 1, 1, 'forme', 1, true);
 
 INSERT INTO projet.type_de_produit (image_type_p, nom_type_p, marge_type_p, model_type_p, manufacturier_type_p, id_usager, id_dimension)
 VALUES ('image', 'type 1',1, 'model', 'manufacturier', 'default', 1);
