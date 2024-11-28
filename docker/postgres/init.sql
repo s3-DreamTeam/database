@@ -200,44 +200,13 @@ VALUES
     ('pouc1302'),
     ('farg2101'),
     ('lesj0901'),
-    ('stel2002');
+    ('stel2002'),
+    ('default');
 
-INSERT INTO projet.type_de_caracteristique_machine (nom_type_caracteristique_m)
-VALUES ('Type de machine 1');
-INSERT INTO projet.type_de_caracteristique_machine (nom_type_caracteristique_m)
-VALUES ('Type de machine 2');
-
-INSERT INTO projet.type_de_caracteristique_produit (nom_type_caracteristique_p)
-VALUES ('Type de produit 1');
-INSERT INTO projet.type_de_caracteristique_produit (nom_type_caracteristique_p)
-VALUES ('Type de produit 2');
-
-INSERT INTO projet.caracteristique_machine (nom_caracteristique_m, description_caracteristique_m, type_caracteristique_m, id_type_caracteristique_m)
-VALUES ('Caractéristique machine 1', 'Description 1', 1, 1);
-
-INSERT INTO projet.type_de_machine (model_type_m, manufacturier_type_m, image_type_m, row_type_m, column_type_m, quantity_type_m, id_usager)
-VALUES ('Model 1', 'Manufacturier 1', 'image', 1, 1, 1, 'graf2102');
-
-INSERT INTO projet.dimension (nom_dimension, largeur_dimension, hauteur_dimension, longueur_dimension, forme_dimension, produit_par_unite_dimension, est_emballe_dimension)
-VALUES ('machine 1', 1, 1, 1, 'Forme 1', 1, TRUE);
 
 INSERT INTO projet.type_de_produit (image_type_p, nom_type_p, marge_type_p, model_type_p, manufacturier_type_p, id_usager, id_dimension)
-VALUES ('image', 'type 1',1, 'model', 'manufacturier', 'graf2102', 1);
+VALUES ('image', 'type 1',1, 'model', 'manufacturier', 'default', 1);
 
 INSERT INTO projet.produit (quantite_produit, prix_achat_produit, image_produit, nom_produit, id_usager, id_type_p)
-VALUES (1, 1, 'image', 'Nom produit 1', 'graf2102', 1);
+VALUES (1, 1, 'image', 'Nom produit 1', 'default', 1);
 
-INSERT INTO projet.machine (emplacement_machine, nom_machine, image_machine, no_serie, id_type_m, id_usager)
-VALUES ('Emplacement 1', 'Nom 1', 'asdf', 1, 1, 'graf2102');
-
-INSERT INTO projet.inventaire (id_inventaire, slot_inventaire, quantite_inventaire, id_produit, id_machine)
-VALUES (2, 'A1', 67,1, 1);
-
-INSERT INTO projet.achat (produit_achat)
-VALUES ('1');
-
-INSERT INTO projet.caracteristique_produit (nom_caracteristique_p, id_type_caracteristique_p)
-VALUES ('Caractéristique produit 1', 1);
-
-INSERT INTO projet.produit (quantite_produit, prix_achat_produit, image_produit, nom_produit, id_usager, id_type_p)
-VALUES (5, 25, 'image', 'Nom produit 1', 'graf2102', 1);
